@@ -1,0 +1,75 @@
+body {
+  font-family: Roboto;
+}
+
+div.container {
+  position: relative;
+  top: 33%;
+  margin: 0 auto;
+  width: 500px;
+  height: 250px;
+  border: solid 1px;
+  border-radius: 2px;
+
+}
+
+.tab-container {
+  display: flex;
+  list-style-type: none;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.tab {
+  position: relative;
+  width: 248px;
+  height: 30px;
+  border-radius: 1px;
+  background-color: #a3c3f7;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 30px;
+  margin: 1px;
+  font-size: 18px;
+  user-select: none;
+}
+
+.tab:hover {
+  background-color: #2f73e0;
+}
+
+.selected {
+  background-color: #2f73e0;
+}
+
+.input-wrapper {
+  width: 200px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.login {
+  margin: 25px auto;
+}
+
+.register {
+  margin: 5px auto;
+}
+
+input.creds {
+  display: block;
+  margin: 1px;
+  width: 200px;
+}
+
+.button {
+  margin: 0 40px;
+  width: 120px;
+  height: 30px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 15px;
+  border-color: transparent;
+  background-color: #2f73e0;
+}

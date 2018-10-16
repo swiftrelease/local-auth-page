@@ -7,10 +7,9 @@ div.container {
   top: 33%;
   margin: 0 auto;
   width: 500px;
-  height: 250px;
+  height: 300px;
   border: solid 1px;
   border-radius: 2px;
-
 }
 
 .tab-container {
@@ -50,17 +49,22 @@ div.container {
 }
 
 .login {
-  margin: 25px auto;
+  margin: 35px auto;
 }
 
 .register {
-  margin: 5px auto;
+  margin: 10px auto;
 }
 
 input.creds {
   display: block;
   margin: 1px;
   width: 200px;
+  font-weight: 500;
+  border-radius: 5px;
+  border: 1px solid;
+  border-color: #bcbcbc;
+  padding: 0.4em;
 }
 
 .button {
@@ -72,4 +76,10 @@ input.creds {
   border-radius: 15px;
   border-color: transparent;
   background-color: #2f73e0;
+}
+
+.warning {
+  font-size: 10px;
+  color: #f7404c;
+  position: absolute;
 }

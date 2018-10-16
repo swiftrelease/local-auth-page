@@ -127,6 +127,12 @@ registerButton.className = "button";
 registerButton.type = "button";
 registerButton.innerText = "Register";
 
+var usernameWarningLabel = document.createElement("label");
+var passWarningLabel = document.createElement("label");
+//usernameWarningLabel.innerText = "User does not exist";
+//passWarningLabel.innerText = "Incorrect password";
+usernameWarningLabel.className = passWarningLabel.className = "warning";
+
 
 // Button click actions
 
@@ -148,17 +154,32 @@ registerButton.onclick = function(event) {
 
 // Login button click event handler
 loginButton.onclick = function(event) {
-  if(!loginInp.value || !passInp.value) {
-    console.log("One of the fields is empty");
+  // Remove previous warnings
+  var warnings = document.getElementsByClassName("warning");
+  for(var el of warnings) {
+    el.parentElement.removeChild(el);
+  }
+
+  // Check that both inputs are filled
+  if(!loginInp.value) {
+    usernameWarningLabel.innerText = "* Field required";
+    loginWrapper.appendChild(usernameWarningLabel);
+    return;
+  } else if(!passInp.value) {
+    passWarningLabel.innerText = "* Field required";
+    passWrapper.appendChild(passWarningLabel);
     return;
   }
+  // Reset warning labels text
+  usernameWarningLabel.innerText = "User does not exist";
+  passWarningLabel.innerText = "Incorrect password";
   for(var u of users) {
     if(u.usernameEquals(loginInp.value) || u.emailEquals(loginInp.value)) {
-      u.checkPassword(passInp.value) ? console.log("Login successful") : console.log("Incorrect password");
+      u.checkPassword(passInp.value) ? console.log("Login successful") : passWrapper.appendChild(passWarningLabel);
       return;
     }
   }
-  console.log("No such user registered");
+  loginWrapper.appendChild(usernameWarningLabel);
 };
 
 

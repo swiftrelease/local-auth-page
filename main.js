@@ -22,6 +22,10 @@ function User(username, name, email, pass) {
   this.emailEquals = function(e) {
     return email.toLowerCase() === e.toLowerCase();
   }
+
+  this.show = function() {
+    return this;
+  }
 }
 
 var users = [];
@@ -50,11 +54,13 @@ function selectTab(event) {
   }
   if(this == tabLogin) {
     if(!document.getElementById("login-container")) {
+      container.style.height = "";
       container.removeChild(registerContainer);
       container.appendChild(loginContainer);
     }
-  } else {
+  } else if(this == tabRegister) {
     if(!document.getElementById("register-container")) {
+      container.style.height = "400px";
       container.removeChild(loginContainer);
       container.appendChild(registerContainer);
     }
@@ -134,17 +140,62 @@ var passWarningLabel = document.createElement("label");
 usernameWarningLabel.className = passWarningLabel.className = "warning";
 
 
+registerNameWarningLabel = document.createElement("label");
+registerEmailWarningLabel = document.createElement("label");
+registerLoginWarningLabel = document.createElement("label");
+registerPassWarningLabel = document.createElement("label");
+registerNameWarningLabel.className = registerEmailWarningLabel.className = registerLoginWarningLabel.className =
+  registerPassWarningLabel.className = "warning";
+
 // Button click actions
 
 // Register button click event handler
 registerButton.onclick = function(event) {
-  if(!registerLoginInp.value || !registerNameInp.value || !registerEmailInp.value || !registerPassInp.value) {
-    console.log("One of the fields is empty");
+  // Remove previous warnings
+  var warnings = document.getElementsByClassName("warning");
+  for(var el of warnings) {
+    el.parentElement.removeChild(el);
+  }
+
+  if(!registerNameInp.value) {
+    registerNameWarningLabel.innerText = "* Field required";
+    registerNameWrapper.appendChild(registerNameWarningLabel);
+    return;
+  } else if(!registerEmailInp.value) {
+    registerEmailWarningLabel.innerText = "* Field required";
+    registerEmailWrapper.appendChild(registerEmailWarningLabel);
+    return;
+  } else if(!registerLoginInp.value) {
+    registerLoginWarningLabel.innerText = "* Field required";
+    registerLoginWrapper.appendChild(registerLoginWarningLabel);
+    return;
+  } else if(!registerPassInp.value) {
+    registerPassWarningLabel.innerText = "* Field required";
+    registerPassWrapper.appendChild(registerPassWarningLabel);
     return;
   }
+
+  // Email validation
+  var emailPattern = /[a-z0-9-.!#$%&'*+/=?^_`{|}~]+@[a-z0-9-.]+\.[a-z]+/i;
+  if(registerEmailInp.value.match(emailPattern)[0] !== registerEmailInp.value) {
+    registerEmailWarningLabel.innerText = "Invalid email address";
+    registerEmailWrapper.appendChild(registerEmailWarningLabel);
+    return;
+  }
+
+  // if(!registerLoginInp.value || !registerNameInp.value || !registerEmailInp.value || !registerPassInp.value) {
+  //   console.log("One of the fields is empty");
+  //   return;
+  //
+
   for(var u of users) {
     if(u.usernameEquals(registerLoginInp.value)) {
-      console.log("Username already taken");
+      showWarningLabel(registerLoginWarningLabel, registerLoginWrapper, "Username already taken");
+      // console.log("Username already taken");
+      return;
+    }
+    if(u.emailEquals(registerEmailInp.value)) {
+      showWarningLabel(registerEmailWarningLabel, registerEmailWrapper, "User with this email already exists");
       return;
     }
   }
@@ -170,6 +221,7 @@ loginButton.onclick = function(event) {
     passWrapper.appendChild(passWarningLabel);
     return;
   }
+
   // Reset warning labels text
   usernameWarningLabel.innerText = "User does not exist";
   passWarningLabel.innerText = "Incorrect password";
@@ -183,7 +235,25 @@ loginButton.onclick = function(event) {
 };
 
 
-// Function to add elements to the page
+// Append warning label to DOM with @text
+function showWarningLabel(label, wrapper, text) {
+  label.innerText = text;
+  wrapper.appendChild(label);
+}
+
+//  Get the array of registered users
+function getUsers() {
+  return localStorage.getItem("users") ? JSON.parse(localStorage.getItem("users")) : [];
+}
+
+// Add users to the localStorage
+function addUser(user) {
+    var users = getUsers();
+    users.push(user);
+    localStorage.setItem("users", JSON.stringify(users));
+}
+
+// Add elements to the page
 function addElement(tag, container) {
   var cont = container ? container : document.body;
   var el = document.createElement(tag);

@@ -1,3 +1,15 @@
+var token;
+for(var c of document.cookie.split(";")) {
+  if(c.split("=")[0].indexOf("token") === 0)
+    token = c.split("=")[1];
+}
+
+if(token) {
+  for(var user of users) {
+    user.checkToken(token) ? console.log("Logging in due to cookie") : console.log("No cookie");
+  }
+}
+
 var container = addElement("div", document.body, true, "container");
 
 var tabContainer = addElement("ul", container, true, "tab-container");
@@ -120,15 +132,9 @@ registerButton.onclick = function(event) {
     return;
   }
 
-  // if(!registerLoginInp.value || !registerNameInp.value || !registerEmailInp.value || !registerPassInp.value) {
-  //   console.log("One of the fields is empty");
-  //   return;
-  //
-
   for(var u of users) {
     if(u.usernameEquals(registerLoginInp.value)) {
       showWarningLabel(registerLoginWarningLabel, registerLoginWrapper, "Username already taken");
-      // console.log("Username already taken");
       return;
     }
     if(u.emailEquals(registerEmailInp.value)) {
@@ -137,9 +143,9 @@ registerButton.onclick = function(event) {
     }
   }
 
-
   var user = new User(registerLoginInp.value, registerNameInp.value, registerEmailInp.value, registerPassInp.value);
   users.push(user);
+  user.saveToStorage();
 };
 
 // Login button click event handler
@@ -168,6 +174,7 @@ loginButton.onclick = function(event) {
     if(u.usernameEquals(loginInp.value) || u.emailEquals(loginInp.value)) {
       if(u.checkPassword(passInp.value)) {
         console.log("Login successful");
+        u.setLoginCookie();
         return;
       } else {
         passWrapper.appendChild(passWarningLabel);

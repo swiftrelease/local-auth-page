@@ -1,0 +1,258 @@
+[
+  {
+    "name": "container",
+    "tag": "div",
+    "parent": "document.body",
+    "className": "container",
+    "append": true
+  },
+  {
+    "name": "tabContainer",
+    "tag": "ul",
+    "parent": "container",
+    "className": "tab-container",
+    "append": true
+  },
+  {
+    "name": "tabLogin",
+    "tag": "li",
+    "parent": "tabContainer",
+    "className": "tab selected",
+    "append": true,
+    "innerText": "Log in"
+  },
+  {
+    "name": "tabRegister",
+    "tag": "li",
+    "parent": "tabContainer",
+    "className": "tab",
+    "append": true,
+    "innerText": "Register"
+  },
+  {
+    "name": "loginContainer",
+    "tag": "div",
+    "parent": "container",
+    "append": true,
+    "id": "login-container"
+  },
+  {
+    "name": "registerContainer",
+    "tag": "div",
+    "parent": "container",
+    "append": false,
+    "id": "register-container"
+  },
+  {
+    "name": "loginWrapper",
+    "tag": "div",
+    "parent": "loginContainer",
+    "className": "input-wrapper login",
+    "append": true
+  },
+  {
+    "name": "passWrapper",
+    "tag": "div",
+    "parent": "loginContainer",
+    "className": "input-wrapper login",
+    "append": true
+  },
+  {
+    "name": "loginButtonWrapper",
+    "tag": "div",
+    "parent": "loginContainer",
+    "className": "input-wrapper login",
+    "append": true
+  },
+  {
+    "name": "loginLabel",
+    "tag": "label",
+    "parent": "loginWrapper",
+    "className": "",
+    "append": true,
+    "innerText": "Username or email"
+  },
+  {
+    "name": "loginInp",
+    "tag": "input",
+    "parent": "loginWrapper",
+    "className": "creds",
+    "append": true,
+    "type": "text"
+  },
+  {
+    "name": "passLabel",
+    "tag": "label",
+    "parent": "passWrapper",
+    "className": "",
+    "append": true,
+    "innerText": "Password"
+  },
+  {
+    "name": "passInp",
+    "tag": "input",
+    "parent": "passWrapper",
+    "className": "creds",
+    "append": true,
+    "type": "password"
+  },
+  {
+    "name": "loginButton",
+    "tag": "button",
+    "parent": "loginButtonWrapper",
+    "className": "button",
+    "append": true,
+    "innerText": "Log in",
+    "type": "button"
+  },
+  {
+    "name": "registerNameWrapper",
+    "tag": "div",
+    "parent": "registerContainer",
+    "className": "input-wrapper register",
+    "append": true
+  },
+  {
+    "name": "registerEmailWrapper",
+    "tag": "div",
+    "parent": "registerContainer",
+    "className": "input-wrapper register",
+    "append": true
+  },
+  {
+    "name": "registerLoginWrapper",
+    "tag": "div",
+    "parent": "registerContainer",
+    "className": "input-wrapper register",
+    "append": true
+  },
+  {
+    "name": "registerPassWrapper",
+    "tag": "div",
+    "parent": "registerContainer",
+    "className": "input-wrapper register",
+    "append": true
+  },
+  {
+    "name": "registerButtonWrapper",
+    "tag": "div",
+    "parent": "registerContainer",
+    "className": "input-wrapper register",
+    "append": true
+  },
+  {
+    "name": "registerNameLabel",
+    "tag": "label",
+    "parent": "registerNameWrapper",
+    "className": "",
+    "append": true,
+    "innerText": "Full name"
+  },
+  {
+    "name": "registerNameInp",
+    "tag": "input",
+    "parent": "registerNameWrapper",
+    "className": "creds",
+    "append": true,
+    "type": "text"
+  },
+  {
+    "name": "registerEmailLabel",
+    "tag": "label",
+    "parent": "registerEmailWrapper",
+    "className": "",
+    "append": true,
+    "innerText": "Email"
+  },
+  {
+    "name": "registerEmailInp",
+    "tag": "input",
+    "parent": "registerEmailWrapper",
+    "className": "creds",
+    "append": true,
+    "type": "text"
+  },
+  {
+    "name": "registerLoginLabel",
+    "tag": "label",
+    "parent": "registerLoginWrapper",
+    "className": "",
+    "append": true,
+    "innerText": "Username"
+  },
+  {
+    "name": "registerLoginInp",
+    "tag": "input",
+    "parent": "registerLoginWrapper",
+    "className": "creds",
+    "append": true,
+    "type": "text"
+  },
+  {
+    "name": "registerPassLabel",
+    "tag": "label",
+    "parent": "registerPassWrapper",
+    "className": "",
+    "append": true,
+    "innerText": "Password"
+  },
+  {
+    "name": "registerPassInp",
+    "tag": "input",
+    "parent": "registerPassWrapper",
+    "className": "creds",
+    "append": true,
+    "type": "password"
+  },
+  {
+    "name": "registerButton",
+    "tag": "button",
+    "parent": "registerButtonWrapper",
+    "className": "button",
+    "append": true,
+    "innerText": "Register",
+    "type": "button"
+  },
+  {
+    "name": "usernameWarningLabel",
+    "tag": "label",
+    "parent": "loginWrapper",
+    "className": "warning",
+    "append": false
+  },
+  {
+    "name": "passWarningLabel",
+    "tag": "label",
+    "parent": "passWrapper",
+    "className": "warning",
+    "append": false
+  },
+  {
+    "name": "registerNameWarningLabel",
+    "tag": "label",
+    "parent": "registerNameWrapper",
+    "className": "warning",
+    "append": false
+  },
+  {
+    "name": "registerEmailWarningLabel",
+    "tag": "label",
+    "parent": "registerEmailWrapper",
+    "className": "warning",
+    "append": false
+  },
+  {
+    "name": "registerLoginWarningLabel",
+    "tag": "label",
+    "parent": "registerLoginWrapper",
+    "className": "warning",
+    "append": false
+  },
+  {
+    "name": "registerPassWarningLabel",
+    "tag": "label",
+    "parent": "registerPassWrapper",
+    "className": "warning",
+    "append": false
+  }
+]

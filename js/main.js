@@ -1,12 +1,21 @@
+var loginHtmlDataUrl = "login-html-data.json";
+var loginDomObjects = [];
+
 var token;
 for(var c of document.cookie.split(";")) {
   if(c.split("=")[0].indexOf("token") === 0)
     token = c.split("=")[1];
 }
 
+var currentUser;
+
 if(token) {
   for(var user of users) {
-    user.checkToken(token) ? console.log("Logging in due to cookie") : console.log("No cookie");
+    if(user.checkToken(token)) {
+      console.log("Logging in due to cookie");
+      currentUser = user;
+      showProfilePage();
+    }
   }
 }
 
@@ -146,6 +155,7 @@ registerButton.onclick = function(event) {
   var user = new User(registerLoginInp.value, registerNameInp.value, registerEmailInp.value, registerPassInp.value);
   users.push(user);
   user.saveToStorage();
+  currentUser = user;
 };
 
 // Login button click event handler
@@ -174,7 +184,9 @@ loginButton.onclick = function(event) {
     if(u.usernameEquals(loginInp.value) || u.emailEquals(loginInp.value)) {
       if(u.checkPassword(passInp.value)) {
         console.log("Login successful");
+        currentUser = u;
         u.setLoginCookie();
+        showProfilePage();
         return;
       } else {
         passWrapper.appendChild(passWarningLabel);
@@ -192,18 +204,6 @@ function showWarningLabel(label, wrapper, text) {
   wrapper.appendChild(label);
 }
 
-//  Get the array of registered users
-function getUsers() {
-  return localStorage.getItem("users") ? JSON.parse(localStorage.getItem("users")) : [];
-}
-
-// Add users to the localStorage
-function addUser(user) {
-    var users = getUsers();
-    users.push(user);
-    localStorage.setItem("users", JSON.stringify(users));
-}
-
 // Add elements to the page
 function addElement(tag, container, append, classname, innertext) {
   var cont = container ? container : document.body;
@@ -212,4 +212,17 @@ function addElement(tag, container, append, classname, innertext) {
   el.innerText = innertext ? innertext : "";
   if(append) cont.appendChild(el);
   return el;
+}
+
+function getJsonData(url) {
+  return fetch(url).then(response => response.json());
+}
+
+async function buildPage() {
+  await getJsonData(loginHtmlDataUrl)
+    .then(data => {
+      data.forEach(item => {
+        var el = addElement(item.tag, item.container, item.append, item.className);
+      });
+    });
 }

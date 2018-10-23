@@ -3,8 +3,16 @@ function User(username, name, email, pass, passIsHashed, token) {
   var name = name;
   var email = email;
   var pass = passIsHashed ? pass : Sha256.hash(pass);
-  var avatarUrl;
+  var avatarUrl = "assets/default-avatar.png";
   var token = token ? token : Sha256.hash(Math.random());
+
+  this.getName = function() {
+    return name;
+  };
+
+  this.setName = function(newName) {
+    name = newName;
+  };
 
   this.setAvatarUrl = function(url) {
     avatarUrl = url;
@@ -18,8 +26,20 @@ function User(username, name, email, pass, passIsHashed, token) {
     return Sha256.hash(password) === pass;
   };
 
+  this.getUsername = function() {
+    return username;
+  };
+
   this.usernameEquals = function(un) {
     return username.toLowerCase() === un.toLowerCase();
+  };
+
+  this.getEmail = function() {
+    return email;
+  };
+
+  this.setEmail = function(e) {
+    email = e;
   };
 
   this.emailEquals = function(e) {
@@ -28,7 +48,6 @@ function User(username, name, email, pass, passIsHashed, token) {
 
   this.setLoginCookie = function() {
     document.cookie = `token=${token};`;
-    console.log(document.cookie);
   };
 
   this.resetToken = function() {
@@ -48,6 +67,18 @@ function User(username, name, email, pass, passIsHashed, token) {
       avatarUrl: avatarUrl,
       token: token
     });
+    localStorage.setItem("users", JSON.stringify(userData));
+  };
+
+  this.updateStorage = function() {
+    for(var entry of userData) {
+      if(this.usernameEquals(entry.username)) {
+        entry.name = name;
+        entry.email = email;
+        entry.avatarUrl = avatarUrl;
+        entry.passHash = pass;
+      }
+    }
     localStorage.setItem("users", JSON.stringify(userData));
   };
 }

@@ -76,6 +76,9 @@ input.creds {
   font-size: 16px;
   border-radius: 15px;
   border-color: transparent;
+  background-color: #a3c3f7;
+}
+.button:hover {
   background-color: #2f73e0;
 }
 
@@ -83,4 +86,23 @@ input.creds {
   font-size: 10px;
   color: #f7404c;
   position: absolute;
+}
+
+.avatar {
+  position: relative;
+  object-fit: cover;
+  height: 200px;
+  width: 200px;
+  margin: 15px;
+}
+.avatar:hover {
+  margin: 13px;
+  border: 2px solid;
+  border-color: #979c9c;
+}
+
+.logout {
+  position: absolute;
+  top: 5px;
+  right: -15px;
 }

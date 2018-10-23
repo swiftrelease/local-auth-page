@@ -1,5 +1,7 @@
-var loginHtmlDataUrl = "login-html-data.json";
-var loginDomObjects = [];
+var loginHtmlDataUrl = "https://js.4minutewarning.net/auth/assets/login-html-data.json";
+var loginDom = {};
+buildPage();
+
 
 var token;
 for(var c of document.cookie.split(";")) {
@@ -19,6 +21,7 @@ if(token) {
   }
 }
 
+/*
 var container = addElement("div", document.body, true, "container");
 
 var tabContainer = addElement("ul", container, true, "tab-container");
@@ -26,10 +29,11 @@ var tabContainer = addElement("ul", container, true, "tab-container");
 var tabLogin = addElement("li", tabContainer, true, "tab selected", "Log in");
 var tabRegister = addElement("li", tabContainer, true, "tab", "Register");
 
-var tabs = [tabLogin, tabRegister];
+*/
+var tabs = [loginDom.tabLogin, loginDom.tabRegister];
 
 
-tabContainer.selectTab = function(event) {
+selectTab = function(event) {
   this.className = "tab selected";
   for(var tab of tabs) {
     if(tab != this) {
@@ -38,21 +42,23 @@ tabContainer.selectTab = function(event) {
   }
   if(this == tabLogin) {
     if(!document.getElementById("login-container")) {
-      container.style.height = "";
-      container.removeChild(registerContainer);
-      container.appendChild(loginContainer);
+      loginDom.container.style.height = "";
+      loginDom.container.removeChild(loginDom.registerContainer);
+      loginDom.container.appendChild(loginDom.loginContainer);
     }
   } else if(this == tabRegister) {
     if(!document.getElementById("register-container")) {
-      container.style.height = "400px";
-      container.removeChild(loginContainer);
-      container.appendChild(registerContainer);
+      loginDom.container.style.height = "400px";
+      loginDom.container.removeChild(loginDom.loginContainer);
+      loginDom.container.appendChild(loginDom.registerContainer);
     }
   }
 }
 
-tabLogin.onclick = tabRegister.onclick = tabContainer.selectTab;
 
+loginDom.tabLogin.onclick = loginDom.tabRegister.onclick = selectTab;
+
+/*
 var loginContainer = addElement("div", container, true);
 var registerContainer = document.createElement("div");
 loginContainer.id = "login-container";
@@ -104,97 +110,100 @@ registerEmailWarningLabel = addElement("label", null, false, "warning");
 registerLoginWarningLabel = addElement("label", null, false, "warning");
 registerPassWarningLabel = addElement("label", null, false, "warning");
 
+*/
+
 // Button click actions
 
 // Register button click event handler
-registerButton.onclick = function(event) {
+loginDom.registerButton.onclick = function(event) {
   // Remove previous warnings
   var warnings = document.getElementsByClassName("warning");
   for(var el of warnings) {
     el.parentElement.removeChild(el);
   }
 
-  if(!registerNameInp.value) {
-    registerNameWarningLabel.innerText = "* Field required";
-    registerNameWrapper.appendChild(registerNameWarningLabel);
+  if(!loginDom.registerNameInp.value) {
+    loginDom.registerNameWarningLabel.innerText = "* Field required";
+    loginDom.registerNameWrapper.appendChild(loginDom.registerNameWarningLabel);
     return;
-  } else if(!registerEmailInp.value) {
-    registerEmailWarningLabel.innerText = "* Field required";
-    registerEmailWrapper.appendChild(registerEmailWarningLabel);
+  } else if(!loginDom.registerEmailInp.value) {
+    loginDom.registerEmailWarningLabel.innerText = "* Field required";
+    loginDom.registerEmailWrapper.appendChild(loginDom.registerEmailWarningLabel);
     return;
-  } else if(!registerLoginInp.value) {
-    registerLoginWarningLabel.innerText = "* Field required";
-    registerLoginWrapper.appendChild(registerLoginWarningLabel);
+  } else if(!loginDom.registerLoginInp.value) {
+    loginDom.registerLoginWarningLabel.innerText = "* Field required";
+    loginDom.registerLoginWrapper.appendChild(loginDom.registerLoginWarningLabel);
     return;
-  } else if(!registerPassInp.value) {
-    registerPassWarningLabel.innerText = "* Field required";
-    registerPassWrapper.appendChild(registerPassWarningLabel);
+  } else if(!loginDom.registerPassInp.value) {
+    loginDom.registerPassWarningLabel.innerText = "* Field required";
+    loginDom.registerPassWrapper.appendChild(loginDom.registerPassWarningLabel);
     return;
   }
 
   // Email validation
   var emailPattern = /[a-z0-9-.!#$%&'*+/=?^_`{|}~]+@[a-z0-9-.]+\.[a-z]+/i;
-  if(!registerEmailInp.value.match(emailPattern) ||
-      registerEmailInp.value.match(emailPattern)[0] !== registerEmailInp.value) {
-    registerEmailWarningLabel.innerText = "Invalid email address";
-    registerEmailWrapper.appendChild(registerEmailWarningLabel);
+  if(!loginDom.registerEmailInp.value.match(emailPattern) ||
+      loginDom.registerEmailInp.value.match(emailPattern)[0] !== loginDom.registerEmailInp.value) {
+    loginDom.registerEmailWarningLabel.innerText = "Invalid email address";
+    loginDom.registerEmailWrapper.appendChild(loginDom.registerEmailWarningLabel);
     return;
   }
 
   for(var u of users) {
-    if(u.usernameEquals(registerLoginInp.value)) {
-      showWarningLabel(registerLoginWarningLabel, registerLoginWrapper, "Username already taken");
+    if(u.usernameEquals(loginDom.registerLoginInp.value)) {
+      showWarningLabel(loginDom.registerLoginWarningLabel, loginDom.registerLoginWrapper, "Username already taken");
       return;
     }
-    if(u.emailEquals(registerEmailInp.value)) {
-      showWarningLabel(registerEmailWarningLabel, registerEmailWrapper, "User with this email already exists");
+    if(u.emailEquals(loginDom.registerEmailInp.value)) {
+      showWarningLabel(loginDom.registerEmailWarningLabel, loginDom.registerEmailWrapper, "User with this email already exists");
       return;
     }
   }
 
-  var user = new User(registerLoginInp.value, registerNameInp.value, registerEmailInp.value, registerPassInp.value);
+  var user = new User(loginDom.registerLoginInp.value, loginDom.registerNameInp.value,
+    loginDom.registerEmailInp.value, loginDom.registerPassInp.value);
   users.push(user);
   user.saveToStorage();
   currentUser = user;
 };
 
 // Login button click event handler
-loginButton.onclick = function(event) {
+loginDom.loginButton.onclick = function(event) {
   // Remove previous warnings
   var warnings = document.getElementsByClassName("warning");
   for(var el of warnings) {
     el.parentElement.removeChild(el);
   }
 
-  // Check that both inputs are filled
-  if(!loginInp.value) {
-    usernameWarningLabel.innerText = "* Field required";
-    loginWrapper.appendChild(usernameWarningLabel);
+  // Show warnings if an input is empty
+  if(!loginDom.loginInp.value) {
+    loginDom.usernameWarningLabel.innerText = "* Field required";
+    loginDom.loginWrapper.appendChild(loginDom.usernameWarningLabel);
     return;
-  } else if(!passInp.value) {
-    passWarningLabel.innerText = "* Field required";
-    passWrapper.appendChild(passWarningLabel);
+  } else if(!loginDom.passInp.value) {
+    loginDom.passWarningLabel.innerText = "* Field required";
+    loginDom.passWrapper.appendChild(loginDom.passWarningLabel);
     return;
   }
 
   // Reset warning labels text
-  usernameWarningLabel.innerText = "User does not exist";
-  passWarningLabel.innerText = "Incorrect password";
+  loginDom.usernameWarningLabel.innerText = "User does not exist";
+  loginDom.passWarningLabel.innerText = "Incorrect password";
   for(var u of users) {
-    if(u.usernameEquals(loginInp.value) || u.emailEquals(loginInp.value)) {
-      if(u.checkPassword(passInp.value)) {
+    if(u.usernameEquals(loginDom.loginInp.value) || u.emailEquals(loginDom.loginInp.value)) {
+      if(u.checkPassword(loginDom.passInp.value)) {
         console.log("Login successful");
         currentUser = u;
         u.setLoginCookie();
         showProfilePage();
         return;
       } else {
-        passWrapper.appendChild(passWarningLabel);
+        loginDom.passWrapper.appendChild(loginDom.passWarningLabel);
         return;
       }
     }
   }
-  loginWrapper.appendChild(usernameWarningLabel);
+  loginDom.loginWrapper.appendChild(loginDom.usernameWarningLabel);
 };
 
 
@@ -210,7 +219,9 @@ function addElement(tag, container, append, classname, innertext) {
   var el = document.createElement(tag);
   el.className = classname ? classname : "";
   el.innerText = innertext ? innertext : "";
-  if(append) cont.appendChild(el);
+  if(append) {
+    cont.appendChild(el);
+  }
   return el;
 }
 
@@ -222,7 +233,27 @@ async function buildPage() {
   await getJsonData(loginHtmlDataUrl)
     .then(data => {
       data.forEach(item => {
-        var el = addElement(item.tag, item.container, item.append, item.className);
+        var container = item.parent === "document.body" ?
+          document.body : loginDom[item.parent];
+        loginDom[item.name] = addElement(item.tag, container, item.append,
+          item.className, item.innerText ? item.innerText : "");
+        if(item.type) loginDom[item.name].type = item.type;
+        if(item.id) loginDom[item.name].id = item.id;
       });
-    });
+    }).catch(error => console.log(error));
 }
+
+/*
+async function buildPage(url) {
+  var response = await fetch(url);
+  var data = await response.json();
+  data.forEach(item => {
+    var container = item.parent === "document.body" ?
+      document.body : loginDom[item.parent];
+    loginDom[item.name] = addElement(item.tag, container, item.append,
+      item.className, item.innerText ? item.innerText : "");
+    if(item.type) loginDom[item.name].type = item.type;
+    if(item.id) loginDom[item.name].id = item.id;
+  });
+}
+*/

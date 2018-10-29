@@ -38,10 +38,8 @@ async function getJsonData(url) {
   var resp = await fetch(url);
   var data = await resp.json();
   data.forEach(item => {
-    var container = item.parent === "document.body" ?
-      document.body : loginDom[item.parent];
-    loginDom[item.name] = addElement(item.tag, container, item.append,
-      item.className, item.innerText ? item.innerText : "");
+    var container = item.parent === "document.body" ? document.body : loginDom[item.parent];
+    loginDom[item.name] = addElement(item.tag, container, item.append, item.className, item.innerText ? item.innerText : "");
     if(item.type) loginDom[item.name].type = item.type;
     if(item.id) loginDom[item.name].id = item.id;
   });

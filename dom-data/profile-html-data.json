@@ -1,0 +1,78 @@
+[
+  {
+    "name": "profilePageContainer",
+    "tag": "div",
+    "parent": "document.body",
+    "className": "",
+    "append": true
+  },
+  {
+    "name": "logoutButton",
+    "tag": "button",
+    "parent": "profilePageContainer",
+    "className": "button logout",
+    "append": true,
+    "innerText": "Log out",
+    "type": "button"
+  },
+  {
+    "name": "greetingPar",
+    "tag": "p",
+    "parent": "profilePageContainer",
+    "className": "",
+    "append": true
+  },
+  {
+    "name": "avatarWrapper",
+    "tag": "div",
+    "parent": "profilePageContainer",
+    "className": "",
+    "append": true
+  },
+  {
+    "name": "avatar",
+    "tag": "img",
+    "parent": "avatarWrapper",
+    "className": "avatar",
+    "append": true
+  },
+  {
+    "name": "userInfoList",
+    "tag": "ul",
+    "parent": "profilePageContainer",
+    "className": "",
+    "append": true
+  },
+  {
+    "name": "infoName",
+    "tag": "li",
+    "parent": "userInfoList",
+    "className": "",
+    "append": true
+  },
+  {
+    "name": "infoEmail",
+    "tag": "li",
+    "parent": "userInfoList",
+    "className": "",
+    "append": true
+  },
+  {
+    "name": "changeNameButton",
+    "tag": "button",
+    "parent": "infoName",
+    "className": "button",
+    "append": true,
+    "innerText": "Change",
+    "type": "button"
+  },
+  {
+    "name": "changeEmailButton",
+    "tag": "button",
+    "parent": "infoEmail",
+    "className": "button",
+    "append": true,
+    "innerText": "Change",
+    "type": "button"
+  }
+]

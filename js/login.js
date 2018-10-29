@@ -39,20 +39,16 @@ function buildLoginPage() {
     }
 
     if(!loginDom.registerNameInp.value) {
-      loginDom.registerNameWarningLabel.innerText = "* Field required";
-      loginDom.registerNameWrapper.appendChild(loginDom.registerNameWarningLabel);
+      showWarningLabel(loginDom.registerNameWarningLabel, loginDom.registerNameWrapper, "* Field required");
       return;
     } else if(!loginDom.registerEmailInp.value) {
-      loginDom.registerEmailWarningLabel.innerText = "* Field required";
-      loginDom.registerEmailWrapper.appendChild(loginDom.registerEmailWarningLabel);
+      showWarningLabel(loginDom.registerEmailWarningLabel, loginDom.registerEmailWrapper, "* Field required");
       return;
     } else if(!loginDom.registerLoginInp.value) {
-      loginDom.registerLoginWarningLabel.innerText = "* Field required";
-      loginDom.registerLoginWrapper.appendChild(loginDom.registerLoginWarningLabel);
+      showWarningLabel(loginDom.registerLoginWarningLabel, loginDom.registerLoginWrapper, "* Field required");
       return;
     } else if(!loginDom.registerPassInp.value) {
-      loginDom.registerPassWarningLabel.innerText = "* Field required";
-      loginDom.registerPassWrapper.appendChild(loginDom.registerPassWarningLabel);
+      showWarningLabel(loginDom.registerPassWarningLabel, loginDom.registerPassWrapper, "* Field required");
       return;
     }
 
@@ -60,8 +56,7 @@ function buildLoginPage() {
     var emailPattern = /[a-z0-9-.!#$%&'*+/=?^_`{|}~]+@[a-z0-9-.]+\.[a-z]+/i;
     if(!loginDom.registerEmailInp.value.match(emailPattern) ||
         loginDom.registerEmailInp.value.match(emailPattern)[0] !== loginDom.registerEmailInp.value) {
-      loginDom.registerEmailWarningLabel.innerText = "Invalid email address";
-      loginDom.registerEmailWrapper.appendChild(loginDom.registerEmailWarningLabel);
+      showWarningLabel(loginDom.registerEmailWarningLabel, loginDom.registerEmailWrapper, "Invalid email address");
       return;
     }
 

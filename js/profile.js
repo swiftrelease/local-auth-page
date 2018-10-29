@@ -1,3 +1,6 @@
+var profileHtmlDataUrl = "https://js.4minutewarning.net/auth/assets/profile-html-data.json";
+var profileDom = {};
+
 function showProfilePage() {
   var loginCont = document.querySelector("div.container");
   if(loginCont) {

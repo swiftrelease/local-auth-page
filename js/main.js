@@ -1,7 +1,5 @@
 var loginHtmlDataUrl = "https://js.4minutewarning.net/auth/assets/login-html-data.json";
 var loginDom = {};
-buildPage();
-
 
 var token;
 for(var c of document.cookie.split(";")) {
@@ -21,17 +19,10 @@ if(token) {
   }
 }
 
-/*
-var container = addElement("div", document.body, true, "container");
+getJsonData(loginHtmlDataUrl);
 
-var tabContainer = addElement("ul", container, true, "tab-container");
-
-var tabLogin = addElement("li", tabContainer, true, "tab selected", "Log in");
-var tabRegister = addElement("li", tabContainer, true, "tab", "Register");
-
-*/
+function buildLoginPage() {
 var tabs = [loginDom.tabLogin, loginDom.tabRegister];
-
 
 selectTab = function(event) {
   this.className = "tab selected";
@@ -40,13 +31,13 @@ selectTab = function(event) {
       tab.className = "tab";
     }
   }
-  if(this == tabLogin) {
+  if(this == loginDom.tabLogin) {
     if(!document.getElementById("login-container")) {
       loginDom.container.style.height = "";
       loginDom.container.removeChild(loginDom.registerContainer);
       loginDom.container.appendChild(loginDom.loginContainer);
     }
-  } else if(this == tabRegister) {
+  } else if(this == loginDom.tabRegister) {
     if(!document.getElementById("register-container")) {
       loginDom.container.style.height = "400px";
       loginDom.container.removeChild(loginDom.loginContainer);
@@ -55,62 +46,7 @@ selectTab = function(event) {
   }
 }
 
-
 loginDom.tabLogin.onclick = loginDom.tabRegister.onclick = selectTab;
-
-/*
-var loginContainer = addElement("div", container, true);
-var registerContainer = document.createElement("div");
-loginContainer.id = "login-container";
-registerContainer.id = "register-container";
-
-var loginWrapper = addElement("div", loginContainer, true, "input-wrapper login");
-var passWrapper = addElement("div", loginContainer, true, "input-wrapper login");
-var loginButtonWrapper = addElement("div", loginContainer, true, "input-wrapper login");
-
-var loginLabel = addElement("label", loginWrapper, true, "", "Username or email");
-var loginInp = addElement("input", loginWrapper, true, "creds");
-var passLabel = addElement("label", passWrapper, true, "", "Password");
-var passInp = addElement("input", passWrapper, true, "creds");
-loginInp.type = "text";
-passInp.type = "password";
-
-var loginButton = addElement("button", loginButtonWrapper, true, "button", "Log in");
-loginButton.type = "button";
-
-
-// Define wrapper elements for Register tab content
-var registerNameWrapper = addElement("div", registerContainer, true, "input-wrapper register");
-var registerEmailWrapper = addElement("div", registerContainer, true, "input-wrapper register");
-var registerLoginWrapper = addElement("div", registerContainer, true, "input-wrapper register");
-var registerPassWrapper = addElement("div", registerContainer, true, "input-wrapper register");
-var registerButtonWrapper = addElement("div", registerContainer, true, "input-wrapper register");
-
-// Define Register tab input, label, button elements
-var registerNameLabel = addElement("label", registerNameWrapper, true, "", "Full name");
-var registerNameInp = addElement("input", registerNameWrapper, true, "creds");
-var registerEmailLabel = addElement("label", registerEmailWrapper, true, "", "Email");
-var registerEmailInp = addElement("input", registerEmailWrapper, true, "creds");
-var registerLoginLabel = addElement("label", registerLoginWrapper, true, "", "Username");
-var registerLoginInp = addElement("input", registerLoginWrapper, true, "creds");
-var registerPassLabel = addElement("label", registerPassWrapper, true, "", "Password");
-var registerPassInp = addElement("input", registerPassWrapper, true, "creds");
-
-registerNameInp.type = registerEmailInp.type = registerLoginInp.type = "text";
-registerPassInp.type = "password";
-
-var registerButton = addElement("button", registerButtonWrapper, true, "button", "Register");
-registerButton.type = "button";
-
-var usernameWarningLabel = addElement("label", null, false, "warning");
-var passWarningLabel = addElement("label", null, false, "warning");
-
-registerNameWarningLabel = addElement("label", null, false, "warning");
-registerEmailWarningLabel = addElement("label", null, false, "warning");
-registerLoginWarningLabel = addElement("label", null, false, "warning");
-registerPassWarningLabel = addElement("label", null, false, "warning");
-
-*/
 
 // Button click actions
 
@@ -205,15 +141,13 @@ loginDom.loginButton.onclick = function(event) {
   }
   loginDom.loginWrapper.appendChild(loginDom.usernameWarningLabel);
 };
+}
 
-
-// Append warning label to DOM with @text
 function showWarningLabel(label, wrapper, text) {
   label.innerText = text;
   wrapper.appendChild(label);
 }
 
-// Add elements to the page
 function addElement(tag, container, append, classname, innertext) {
   var cont = container ? container : document.body;
   var el = document.createElement(tag);
@@ -225,28 +159,9 @@ function addElement(tag, container, append, classname, innertext) {
   return el;
 }
 
-function getJsonData(url) {
-  return fetch(url).then(response => response.json());
-}
-
-async function buildPage() {
-  await getJsonData(loginHtmlDataUrl)
-    .then(data => {
-      data.forEach(item => {
-        var container = item.parent === "document.body" ?
-          document.body : loginDom[item.parent];
-        loginDom[item.name] = addElement(item.tag, container, item.append,
-          item.className, item.innerText ? item.innerText : "");
-        if(item.type) loginDom[item.name].type = item.type;
-        if(item.id) loginDom[item.name].id = item.id;
-      });
-    }).catch(error => console.log(error));
-}
-
-/*
-async function buildPage(url) {
-  var response = await fetch(url);
-  var data = await response.json();
+async function getJsonData(url) {
+  var resp = await fetch(url);
+  var data = await resp.json();
   data.forEach(item => {
     var container = item.parent === "document.body" ?
       document.body : loginDom[item.parent];
@@ -255,5 +170,5 @@ async function buildPage(url) {
     if(item.type) loginDom[item.name].type = item.type;
     if(item.id) loginDom[item.name].id = item.id;
   });
+  buildLoginPage();
 }
-*/

@@ -9,7 +9,7 @@ function showProfilePage() {
   var logoutButton = addElement("button", profilePageContainer, true, "button logout", "Log out");
   logoutButton.onclick = function(event) {
     document.body.removeChild(profilePageContainer);
-    document.body.appendChild(container);
+    document.body.appendChild(loginDom.container);
   };
 
   var greetingPar = addElement("p", profilePageContainer, true);
